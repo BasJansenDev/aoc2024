@@ -1,5 +1,3 @@
-example = "3   4.4   3.2   5.1   3.3   9.3   3"
-
 def main(part1):
     first,second = split_list(input_as_list())
     first.sort()
@@ -25,8 +23,6 @@ def split_list(list):
 def input_as_list():
     f = open('input')
     return list(f.read().split('\n'))
-    # f = example
-    # return list(f.split('.'))
 
 print(main(True))
 print(main(False))
