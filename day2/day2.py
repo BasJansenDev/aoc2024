@@ -1,16 +1,16 @@
 def main(part1):
     input = input_as_list()
-    sum = 0
-    for lst in input:
-        if (part1):
-            sum += check(lst)
-        else:
+    total = 0
+    if(part1):
+        total = sum(check(lst) for lst in input)
+    else:
+        for lst in input:
             for i in range(len(lst)):
                 sublist = lst[:i] + lst[i + 1:]
                 if (check(sublist)):
-                    sum += 1
+                    total += 1
                     break
-    return sum
+    return total
 
 def check(sublist):
     ascending = all(earlier > later for earlier, later in zip(sublist, sublist[1:]))
@@ -20,14 +20,7 @@ def check(sublist):
 
 def input_as_list():
     f = open('input')
-    a = f.read().split('\n')
-    b = []
-    for i in a:
-        c = i.split(' ')
-        for d in range(len(c)):
-            c[d] = int(c[d])
-        b.append(c)
-    return b
+    return [[int(x) for x in i.split(' ')] for i in f.read().split('\n')]
 
 print(main(True))
 print(main(False))
