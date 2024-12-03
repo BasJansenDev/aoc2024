@@ -12,13 +12,11 @@ def main(part1):
                     break
     return sum
 
-
 def check(sublist):
     ascending = all(earlier > later for earlier, later in zip(sublist, sublist[1:]))
     descending = all(earlier < later for earlier, later in zip(sublist, sublist[1:]))
     diff = all(abs(earlier - later) <= 3 for earlier, later in zip(sublist, sublist[1:]))
     return (ascending or descending) and diff
-
 
 def input_as_list():
     f = open('input')
@@ -30,7 +28,6 @@ def input_as_list():
             c[d] = int(c[d])
         b.append(c)
     return b
-
 
 print(main(True))
 print(main(False))
