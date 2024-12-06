@@ -27,15 +27,6 @@ def main(part1):
         layout[obstacle[0]][obstacle[1]] = original_map[obstacle[0]][obstacle[1]]
     return dupes
 
-def get_obstacles(reached):
-    obstacles = set()
-    for position in reached:
-        for d in directions:
-            inc = precomputed_neighbors[position][d]
-            if inc != None:
-                obstacles.add(tuple(inc))
-    return obstacles
-
 def full_run(pos, dupecheck):
     global dupes
     curr_direction = original_direction
@@ -63,32 +54,32 @@ def full_run(pos, dupecheck):
 def find_guard():
     return next((tuple([y, x]) for y in range(height) for x in range(width) if layout[y][x] in mapping), None)
 
-
 def check_wall(idx, direction):
     pos = precomputed_neighbors[idx][direction]
     return layout[pos[0]][pos[1]] == '#' or layout[pos[0]][pos[1]] == 'O'
 
-def precompute_neighbors():
-    global precomputed_neighbors
-    precomputed = {}
-    for y in range(height):
-        for x in range(width):
-            neighbors = []
-            for d in directions.values():
-                ny, nx = y + d[0], x + d[1]
-                if check_boundaries([ny,nx]):
-                    neighbors.append((ny, nx))
-                else:
-                    neighbors.append(None)
-            precomputed[(y, x)] = neighbors
-    precomputed_neighbors = precomputed
-
 def check_boundaries(idx):
     return 0 <= idx[0] < height and 0 <= idx[1] < width
 
+def get_obstacles(reached):
+    obstacles = set()
+    for position in reached:
+        for d in directions:
+            inc = precomputed_neighbors[position][d]
+            if inc != None:
+                obstacles.add(tuple(inc))
+    return obstacles
+
+def precompute_neighbors():
+    global precomputed_neighbors
+    precomputed_neighbors = {
+        (y, x): [((y + d[0], x + d[1]) if check_boundaries([y + d[0], x + d[1]]) else None) for d in directions.values()]
+        for y in range(height) for x in range(width)
+    }
+
 def read_input():
     global layout, width, height
-    f = open('input')
+    f = open('testinput')
     layout = list(map(list,f.read().split('\n')))
     height = len(layout)
     width = len(layout[0])
