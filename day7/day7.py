@@ -1,25 +1,17 @@
 def calculate(result, expression, parts):
     if parts == []:
         return expression == result
-    else:
-        return calculate(result, expression + parts[0], parts[1:]) \
-            or calculate(result, expression * parts[0], parts[1:]) \
-            or (part2 and calculate(result, int(str(expression) + str(parts[0])), parts[1:]))
+    return calculate(result, expression + parts[0], parts[1:]) \
+        or calculate(result, expression * parts[0], parts[1:]) \
+        or (part2 and calculate(result, int(str(expression) + str(parts[0])), parts[1:]))
 
 def main():
-    input = read_input()
-    success = 0
+    input = open('input').read().split('\n')
+    sum = 0
     for equation in input:
-        result, parts = equation.split(':')
-        result = int(result)
-        parts = list(map(int,parts.strip().split(' ')))
-        if(calculate(result, parts[0], parts[1:])):
-            success += result
-    return success
-
-def read_input():
-    f = open('input')
-    return f.read().split('\n')
+        result, parts = int(equation.split(':')[0]), list(map(int, equation.split(':')[1].strip().split()))
+        sum += result if calculate(result, parts[0], parts[1:]) else 0
+    return sum
 
 part2 = False
 print(main())
