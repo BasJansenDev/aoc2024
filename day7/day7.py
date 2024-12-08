@@ -3,7 +3,7 @@ def calculate(result, expression, parts):
         return expression == result
     return calculate(result, expression + parts[0], parts[1:]) \
         or calculate(result, expression * parts[0], parts[1:]) \
-        or (part2 and calculate(result, int(str(expression) + str(parts[0])), parts[1:]))
+        or (not part1 and calculate(result, int(str(expression) + str(parts[0])), parts[1:]))
 
 def main():
     input = open('input').read().split('\n')
@@ -13,7 +13,7 @@ def main():
         sum += result if calculate(result, parts[0], parts[1:]) else 0
     return sum
 
-part2 = False
+part1 = True
 print(main())
-part2 = True
+part1 = False
 print(main())
