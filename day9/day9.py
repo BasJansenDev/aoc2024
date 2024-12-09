@@ -5,9 +5,7 @@ def main(part1):
         part1swap(line)
     else:
         files,spaces = translate2(line)
-        files = part2swap(files,spaces)
-        files.sort()
-        line = get_string(files)
+        line = part2swap(files,spaces)
     return sum(i * int(line[i]) for i in range(len(line)) if line[i] != '.')
 
 
@@ -34,7 +32,8 @@ def part2swap(files, spaces):
                 break
         if not inserted:
             new_files.insert(0, (file[0], file[1]))
-    return new_files
+    new_files.sort()
+    return get_string(new_files)
 
 def get_string(tuples):
     max_position = max(t[0] for t in tuples)
