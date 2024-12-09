@@ -2,7 +2,12 @@ def main(part1):
     line = open('testinput').read()
     files,spaces = translate(line, part1)
     line = swap(files,spaces)
-    return sum(i * int(line[i]) for i in range(len(line)) if line[i] != '.')
+    return sum(
+        (index+i) * int(val)
+        for index, text_list in line
+        for i, val in enumerate(text_list)
+        if val != '.'
+    )
 
 def swap(files, spaces):
     new_files = []
@@ -16,18 +21,10 @@ def swap(files, spaces):
                 spaces[i] = (space[0] + len(file[1]), space[1] - len(file[1]))
                 break
     new_files.sort()
-    return get_string(new_files)
-
-def get_string(tuples):
-    max_position = max(t[0] for t in tuples)
-    result = ['.'] * (max_position + 1)
-    for position, text_list in tuples:
-        result[position:position+len(text_list)] = text_list
-    return result
+    return new_files
 
 def translate(line, part1):
-    files = []
-    spaces = []
+    files, spaces = [],[]
     pos, i = 0, 0
     for i in range(len(line)):
         if i % 2 == 0:
