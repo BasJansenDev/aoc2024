@@ -45,11 +45,12 @@ def create_image_from_grid(grid,n, cell_size=10):
 
     img = Image.new('RGB', image_size, color='white')
     draw = ImageDraw.Draw(img)
-  
     for row_idx, row in enumerate(grid):
         for col_idx, cell in enumerate(row):
             if cell != '.':
-                draw.rectangle([top_left, bottom_right], fill='black')
+                draw.rectangle([(col_idx * cell_size, row_idx * cell_size),
+                                ((col_idx + 1) * cell_size,
+                                 (row_idx + 1) * cell_size)], fill='black')
 
     img.save('pictures/picture' + str(n) + '.png')
 print(main())
